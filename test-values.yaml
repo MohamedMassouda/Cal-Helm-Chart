@@ -1,0 +1,28 @@
+# Change everything according to your needs
+
+replicaCount: 1
+
+namespace: cal-test
+app: calcom
+name: calcom
+
+image:
+  repository: calcom.docker.scarf.sh/calcom/cal.com
+  pullPolicy: IfNotPresent
+
+next_public_webapp_url: "http://localhost:3000"
+nextauth_secret: "secret"
+calendso_encryption_key: "secret"
+postgres: 
+  user: "cal"
+  password: "password" # Change to the actual password
+  db: "cal_db"
+  host: "postgresql:5432" # Use the postgres Cluster IP
+  url: "postgresql://cal:password@postgresql:5432/cal_db"
+
+node_env: "production"
+persistent_volume_id: id
+ingress:
+  host: example.com
+  tls: 
+    secretName: example.com

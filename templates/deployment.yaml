@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: calcom-deployment
+  namespace: cal-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: calcom
+  template:
+    metadata:
+      labels:
+        app: calcom
+    spec:
+      containers:
+      - env:
+        - name: NEXT_PUBLIC_WEBAPP_URL
+          value: {{ .Values.next_public_webapp_url }}
+        - name: NEXTAUTH_SECRET
+          value: {{ .Values.nextauth_secret }}
+        - name: CALENDSO_ENCRYPTION_KEY
+          value: {{ .Values.calendso_encryption_key }} 
+        - name: POSTGRES_USER
+          value: {{ .Values.postgres.user }} 
+        - name: POSTGRES_PASSWORD
+          value: {{ .Values.postgres.password }} 
+        - name: POSTGRES_DB
+          value: {{ .Values.postgres.db }}
+        - name: DATABASE_HOST
+          value: {{ .Values.postgres.host }} 
+        - name: DATABASE_URL
+          value: {{ .Values.postgres.url }}
+        - name: NODE_ENV
+          value: {{ .Values.node_env }} 
+        image: {{ .Values.image.repository }} 
+        imagePullPolicy: {{ .Values.image.pullPolicy }} 
+        name: {{ .Values.name }} 
+        ports:
+        - containerPort: 3000
+          protocol: TCP
